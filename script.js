@@ -1,6 +1,5 @@
 const quotes = [
   "the quick brown fox jumps over the lazy dog",
-  "typing tests are fun when you’re winning",
   "hello world",
   "alex ge is a bum lol",
   "media arts is the best class ever",
