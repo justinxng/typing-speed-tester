@@ -16,21 +16,35 @@ let results = document.getElementById("results");
 function loadQuote() {
   const random = quotes[Math.floor(Math.random() * quotes.length)];
   quote.textContent = random;
+  input.focus();
 }
 
 function startTyping() {
   if (!startTime) startTime = new Date();
-  
-  const typed = input.value;
-  if (typed === quote.textContent) {
-    endTime = new Date();
-    let totalTime = (endTime - startTime) / 1000; // seconds
-    let words = typed.trim().split(" ").length;
-    let wpm = Math.round((words / totalTime) * 60);
+}
 
-    let accuracy = getAccuracy(typed, quote.textContent);
+input.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault(); // Prevent new line
+    checkResult();
+  }
+});
+
+function checkResult() {
+  const typed = input.value.trim();
+  const target = quote.textContent.trim();
+
+  if (typed === target) {
+    endTime = new Date();
+    let totalTime = (endTime - startTime) / 1000;
+    let words = typed.split(" ").length;
+    let wpm = Math.round((words / totalTime) * 60);
+    let accuracy = getAccuracy(typed, target);
+
     results.innerHTML = `✅ WPM: <strong>${wpm}</strong><br>🎯 Accuracy: <strong>${accuracy}%</strong>`;
     input.disabled = true;
+  } else {
+    results.innerHTML = `❌ the text dont match up, try again`;
   }
 }
 
